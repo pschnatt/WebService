@@ -1,0 +1,90 @@
+.booking-history {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9fafc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .booking-history h2 {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .booking-history .filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .booking-history .filters button {
+    background-color: transparent;
+    border: none;
+    color: #555;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .booking-history .filters button.active,
+  .booking-history .filters button:hover {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+  }
+  
+  .booking-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .booking-history th,
+  .booking-history td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .booking-history th {
+    background-color: #f4f6f9;
+    font-weight: 600;
+  }
+  
+  .booking-history tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .booking-history .pending {
+    color: #ff8c00;
+    font-weight: bold;
+  }
+
+  .booking-history .cancelled {
+    color: #ff1010;
+    font-weight: bold;
+  }
+  
+  .booking-history .completed {
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  .booking-history .details-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .booking-history .details-button:hover {
+    background-color: #0056b3;
+  }
+  
