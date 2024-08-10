@@ -1,0 +1,155 @@
+.bookingPageContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 100%;
+    max-width: 1400px;
+    height: 78vh;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 50%;
+    transform: translateY(11%);
+  }
+  
+  .leftSection, .rightSection {
+    width: 48%;
+  }
+  
+  .rightSection{
+    position: relative;
+  }
+
+  .bookingDetails {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .propertyImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  .propertyInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the text vertically */
+  }
+  
+  .propertyInfo h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .propertyInfo p {
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .bookingInputs {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 20px;
+  }
+  
+  .inputGroup {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .inputGroup:last-child {
+    margin-right: 0;
+  }
+  
+  .inputGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .inputGroup input {
+    width: 80%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .updateDetailsButton {
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #0071c2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  
+  .houseRules {
+    margin-top: 40px;
+  }
+  
+  .paymentMode{
+    margin-top: 40px;
+  }
+
+  .houseRules h3, .paymentMode h3 {
+    margin-bottom: 10px;
+  }
+
+  .paymentMode p{
+    padding-top: 20px;
+  }
+  
+  .rule {
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+  
+  .paymentMode select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .rightSection {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .invoice h3 {
+    margin-bottom: 20px;
+  }
+  
+  .invoiceItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .invoiceItem.total {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  
+  .confirmButton {
+    position: absolute; bottom: 20px; 
+    width: 94%;
+    padding: 15px;
+    background-color: #0071c2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
