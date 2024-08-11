@@ -1,10 +1,26 @@
 const Booking = require('../models/booking');
+const Restaurant = require('../models/restaurant');
+const User = require('../models/user')
 
 const createbook = async (req, res) => {
   try {
     const { userId, restaurantId, tableNumber, seats, date, specialReq, paymentMethod, status } = req.body;
 
-    // Check if it is already reserved for the given date
+
+    const userExist = await User.findOne({id:userId});
+    if (!userExist){
+      return res.status(400).json({
+        error: "Invalid user Id"
+      })
+    }
+
+    const restaurantExist = await Restaurant.findOne({restaurantId});
+    if (!restaurantExist){
+      return res.status(400).json({
+        error: "Invalid restaurant Id"
+      })
+    }
+
     const dateExist = await Booking.findOne({ restaurantId, tableNumber, date });
     if (dateExist) {
       return res.status(400).json({
@@ -12,7 +28,8 @@ const createbook = async (req, res) => {
       });
     }
 
-    // Check if the date is in the past
+    const now = new Date();
+
     if (new Date(date) < new Date(now.getTime() + 30 * 60000)) {
       return res.status(400).json({
         error: "The booking must be atleast 30 minutes in advance",
@@ -40,8 +57,8 @@ const createbook = async (req, res) => {
 
 const getBook = async (req, res) => {
   try {
-    const {uuserId, ubookingId} = req.body;
-    const book = await Booking.find({userId: uuserId, bookingId: ubookingId});
+    const {uuserId} = req.body;
+    const book = await Booking.find({userId: uuserId});
     res.status(200).json(book);
   } catch (error) {
     console.error('Error getting book:', error);

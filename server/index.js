@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended: false}))
 
 app.use('/', require('./routes/authRoutes'))
 app.use('/api/restaurants', require('./routes/restaurantRoutes'));
-app.use('/api/bookings/', require('./routes/bookingRoutes'))
+app.use('/api/bookings', require('./routes/bookingRoutes'))
 
 
 const port = 8000;
