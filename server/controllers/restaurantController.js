@@ -2,13 +2,15 @@ const Restaurant = require('../models/restaurant');
 
 const createRestaurant = async (req, res) => {
     try {
-      const { name, address, phoneNumber, totalSeats} = req.body;
+      const { name, address, phoneNumber, totalSeats, rating, startingPrice} = req.body;
 
       const newRestaurant = await Restaurant.create({
         name,
-        address, 
-        phoneNumber, 
-        totalSeats
+        address,
+        phoneNumber,
+        totalSeats,
+        rating,
+        startingPrice
       });
   
       return res.json(newRestaurant);
