@@ -15,6 +15,12 @@ const RestaurantSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  rating: {
+    type: Number
+  },
+  startingPrice: {
+    type : Number
+  },
   phoneNumber: Number,
   totalSeats: Number
 });
