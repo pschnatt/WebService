@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import MailList from "../../components/mailList/MailList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from 'react-router-dom';
 import {
   faCircleArrowLeft,
   faCircleArrowRight,
@@ -14,10 +15,14 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const Restaurant = () => {
-
+  const navigate = useNavigate();
   const [restaurant, setRestaurant] = useState([]);
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
+
+  const handleBookNowClick = () => {
+    navigate('/bookingdetail');
+  };
 
   useEffect(() => {
     const id = localStorage.getItem("restaurant_id")
@@ -95,17 +100,17 @@ const Restaurant = () => {
           </div>
         )}
         <div className="restaurantWrapper">
-          <button className="bookNow">Reserve or Book Now!</button>
+          <button className="bookNow" onClick={handleBookNowClick}>Reserve or Book Now!</button>
           <h1 className="restaurantTitle">{restaurant.name || "Restaurant Title"}</h1>
           <div className="restaurantAddress">
             <FontAwesomeIcon icon={faLocationDot} />
             <span>{restaurant.address || "Location not available"}</span>
           </div>
           <span className="restaurantDistance">
-            {restaurant.distance || "Distance not available"}
+            {restaurant.distance || "300M Distance From your Location"}
           </span>
           <span className="restaurantPriceHighlight">
-            {restaurant.priceHighlight || "Price Highlight not available"}
+            {restaurant.startingPrice || "Price Highlight not available"}
           </span>
           <div className="restaurantImages">
             {photos.map((photo, i) => (
@@ -123,18 +128,18 @@ const Restaurant = () => {
             <div className="restaurantDetailsTexts">
               <h1 className="restaurantTitle">Dine in the heart of the City</h1>
               <p className="restaurantDesc">
-                {restaurant.description || "Description not available"}
+                {restaurant.detail || "Description not available"}
               </p>
             </div>
             <div className="restaurantDetailsPrice">
               <h1>Great Place for taking a photo and Family Time</h1>
               <span>
-                {restaurant.locationScore || "Location score not available"}
+                {restaurant.rating || "Location score not available"}
               </span>
               <h2>
                 <b>${restaurant.startingPrice || "Price not available"}</b> (Food Start Price)
               </h2>
-              <button>Reserve or Book Now!</button>
+              <button onClick={handleBookNowClick}>Reserve or Book Now!</button>
             </div>
           </div>
         </div>

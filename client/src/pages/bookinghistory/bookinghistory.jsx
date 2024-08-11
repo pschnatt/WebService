@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './bookinghistory.css';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import { useNavigate } from 'react-router-dom';
 
 const BookingHistory = () => {
   const [filter, setFilter] = useState('ALL');
   const [history, setHistory] = useState([]);
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('/profile', {
@@ -19,14 +19,14 @@ const BookingHistory = () => {
       .catch((error) => toast.error("Error fetching restaurant resources:", error));
   }, []);
 
-
-
   const filteredBookings = history.filter(
     (booking) => filter === 'ALL' || booking.status.toLowerCase() === filter.toLowerCase()
   );
 
   return (
     <div className="booking-history">
+      <button className="back-button" onClick={() => navigate('/')}>Back to Home</button>
+      <button className="back-button" onClick={() => navigate('/restaurants')}>Back to List</button>
       <h2>Booking History</h2>
       <div className="filters">
         <button className={filter === 'ALL' ? 'active' : ''} onClick={() => setFilter('ALL')}>

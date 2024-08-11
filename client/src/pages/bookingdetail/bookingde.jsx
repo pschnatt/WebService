@@ -2,21 +2,50 @@ import React from "react";
 import "./bookingde.css";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useState, useEffect} from "react";
+import { useLocation } from 'react-router-dom';
+
 
 const BookingPage = () => {
+  const [restaurant, setRestaurant] = useState(null);
+  const [user, setUser] = useState(null);
+  const [tableNumber, setTableNumber] = useState('');
+  const [seats, setSeats] = useState('');
+  const [date, setDate] = useState('');
+  const [specialReq, setSpecialReq] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('Pay at check-in');
+  const [status] = useState('Pending');
+
+  useEffect(() => {
+    const id = localStorage.getItem("restaurant_id")
+    console.log(id)
+    axios.post("/api/restaurants/getRestById", {restaurantId: id})
+      .then((response) => {
+        setRestaurant(response.data);
+        console.log(response.data)
+      })
+      .catch((error) => toast.error("Error fetching restaurant resources:", error));
+
+    axios.get("/profile")
+      .then((response) => {
+        setUser(response.data);
+        console.log(user)
+      })
+      .catch((error) => toast.error("Error fetching user resources:", error));
+  }, []);
 
   const handleConfirmBooking = async (e) => {
     e.preventDefault();
     try {
       const bookingData = {
-        userId,
-        restaurantId,
-        tableNumber,
-        seats,
-        date,
-        specialReq,
+        userId: user.id,
+        restaurantId: restaurant.restaurantId,
+        tableNumber:"6",
+        seats:"6",
+        date:"10",
+        specialReq:"None",
         paymentMethod,
-        status
+        status: "Pending"
       };
   
       const bookingResponse = await axios.post("/api/bookings/createBook", bookingData);
@@ -28,14 +57,14 @@ const BookingPage = () => {
         
         const historyEntry = {
           restaurantid: bookingData.restaurantId,
-          restaurantname: "Pizza Paradise",
+          restaurantname: restaurant.name,
           seat: bookingData.seats,
           price: bookingResponse.data.price,
           date: bookingData.date,
           status: bookingData.status
         };
   
-        const historyResponse = await axios.post("/api/user/addHistoryEntry", {
+        const historyResponse = await axios.post("/addHistory", {
           user_id: bookingData.userId,
           newHistory: historyEntry
         });
@@ -69,18 +98,33 @@ const BookingPage = () => {
             </div>
             </div>
 
-            {/* Separated Booking Inputs */}
             <div className="bookingInputs">
             <div className="inputGroup">
-                <label>Reserv. Date</label>
-                <input type="text" value="Wed, 12 Jan" readOnly />
+              <label>Reservation Date</label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
             </div>
             <div className="inputGroup">
-                <label>Seat</label>
-                <input type="text" value="3" readOnly />
+              <label>Seats</label>
+              <input
+                type="number"
+                value={seats}
+                onChange={(e) => setSeats(e.target.value)}
+              />
+            </div>
+            <div className="inputGroup">
+              <label>Table Number</label>
+              <input
+                type="text"
+                value={tableNumber}
+                onChange={(e) => setTableNumber(e.target.value)}
+              />
             </div>
             <button className="updateDetailsButton">Update details</button>
-            </div>
+          </div>
 
             <div className="houseRules">
             <h3>House rules</h3>
@@ -97,10 +141,20 @@ const BookingPage = () => {
 
             <div className="paymentMode">
             <h3>Please select your preferred payment mode</h3>
-            <select>
-                <option>Pay at check in</option>
+            <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+              <option>Pay at check-in</option>
+              <option>Credit Card</option>
+              <option>PayPal</option>
             </select>
             <p>Pay the full booking amount only at check in.</p>
+            </div>
+            <div className="inputGroup2">
+              <label>Special Requests</label>
+              <input
+                type="text"
+                value={specialReq}
+                onChange={(e) => setSpecialReq(e.target.value)}
+              />
             </div>
         </div>
 
