@@ -26,12 +26,8 @@ const BookingPage = () => {
                 <input type="text" value="Wed, 12 Jan" readOnly />
             </div>
             <div className="inputGroup">
-                <label>Adult</label>
+                <label>Seat</label>
                 <input type="text" value="3" readOnly />
-            </div>
-            <div className="inputGroup">
-                <label>Children</label>
-                <input type="text" value="1" readOnly />
             </div>
             <button className="updateDetailsButton">Update details</button>
             </div>

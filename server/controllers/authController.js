@@ -8,31 +8,31 @@ const registerUser = async(req, res) => {
   try {
       const {username, email, phonenumber ,password, cpassword} = req.body;
       //check if name was enter
-      console.log(phonenumber);
+      console.log(email)
       if (!username){
-        return res.json({
+        return res.status(400).json({
           error: "name is required"
         })
       }
       const username_exist = await User.findOne({username})
       if(username_exist){
-        return res.json({
+        return res.status(400).json({
           error: "Username already taken"
         })
       }
       //check password
       if (!password || password.length < 6){
-          return res.json({
+          return res.status(400).json({
             error: "Password should be atleast 6 characters long"
           })
       }
       if(password != cpassword){
-        return res.json({
+        return res.status(400).json({
           error: "Mismatched password"
         })
       }
       if (phonenumber.length != 10){
-        return res.json({
+        return res.status(400).json({
           error: "Invalid phone number"
         })
       }
@@ -40,14 +40,14 @@ const registerUser = async(req, res) => {
       //Check email
       const email_exist = await User.findOne({email});
       if(email_exist) {
-        return res.json({
+        return res.status(400).json({
           error: "Email already taken"
         })
       }
 
       const phone_exist = await User.findOne({phonenumber});
       if (phone_exist){
-        return res.json({
+        return res.status(400).json({
           error: "This phone number has already registered"
         })
       }
@@ -61,7 +61,7 @@ const registerUser = async(req, res) => {
         email,
         password: hashedPassword,
       })
-      return res.json(user)
+      return res.status(200).json(user)
 
   } catch (error) {
       console.log(error)
@@ -76,7 +76,7 @@ const loginUser = async (req, res) => {
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.json({
+      return res.status(400).json({
         error: 'No User Found',
       });
     }
@@ -105,12 +105,12 @@ const loginUser = async (req, res) => {
                 }, process.env.JWT_SECRET, {}, (err, token) => {
         if (err) {
           console.error(err);
-          return res.json({ error: 'Error signing token' });
+          return res.status(400).json({ error: 'Error signing token' });
         }
         res.cookie('token', token).json(user); // Password match, then set cookie
       });
     } else {
-      res.json({
+      res.status(400).json({
         error: 'Password Mismatched',
       });
     }

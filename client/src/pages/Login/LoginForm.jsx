@@ -1,27 +1,49 @@
 import React, { useState } from 'react';
 import './LoginForm.css';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [data, setData] = useState({
+    email:'',
+    password:''
+  });
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Implement login logic here, e.g., API call
-    console.log('Logging in:', { email, password });
-  };
+  const navigate = useNavigate();
+
+  const handleLogin = async(e) => {
+    e.preventDefault()
+    const {email, password} = data
+    try{
+      const {data} = await axios.post('/login', {
+        email,password
+        });
+        if (data.error) {
+          toast.error(data.error)
+        }
+        else {
+          setData({})
+          toast.success('Login Successful!')
+          navigate('/');
+        }
+      }
+    catch (error) 
+      { console.log(error)}
+    }
 
   return (
     <div className="login-form-container">
-      <form onSubmit={handleLogin}>
+      <form>
         <h2>Login</h2>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={data.email}
+            onChange={(e) => setData({ ...data, email: e.target.value })}
             required
           />
         </div>
@@ -30,12 +52,12 @@ const LoginForm = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={data.password}
+            onChange={(e) => setData({ ...data, password: e.target.value })}
             required
           />
         </div>
-        <button type="submit" className="submit-button">Login</button>
+        <button type="submit" className="submit-button" onClick={handleLogin}>Login</button>
       </form>
     </div>
   );

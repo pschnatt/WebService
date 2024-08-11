@@ -1,6 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './SignUpForm.css';
 
 const SignUpForm = () => {
@@ -11,6 +12,8 @@ const SignUpForm = () => {
     password:'',
     cpassword:'',
   })
+
+  const navigate = useNavigate();
 
   const onSIGNINTextClick = async(e) => {
     e.preventDefault()
@@ -27,7 +30,9 @@ const SignUpForm = () => {
           toast.success('Sign Up Successful!')
           navigate('/login')
         }
-      }catch (error) { console.log(error)}
+      }
+    catch (error) 
+      { console.log(error)}
     }
 
   return (
