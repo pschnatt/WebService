@@ -1,6 +1,6 @@
 import "./searchItem.css";
 
-const SearchItem = ({ imageUrl, title, distance, detail, startprice, Rating = 8.1 }) => {
+const SearchItem = ({ id, imageUrl, title, address, phoneNumber, startprice, Rating = 8.1 }) => {
   return (
     <div className="searchItem">
       <img
@@ -10,10 +10,10 @@ const SearchItem = ({ imageUrl, title, distance, detail, startprice, Rating = 8.
       />
       <div className="siDesc">
         <h1 className="siTitle">{title}</h1>
-        <span className="siDistance">{distance} from your place</span>
+        <span className="siDistance">{address}</span>
         <span className="siTaxiOp">Free Wifi</span>
         <span className="siSubtitle">
-          {detail}
+          {phoneNumber}
         </span>
         <span className="siFeatures">
         </span>
