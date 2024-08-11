@@ -12,7 +12,7 @@ const bookingHistorySchema = new Schema({
 
 const profileSchema = new Schema({
   username: String,
-  id : Number,
+  id : String,
   history : [bookingHistorySchema] 
 });
 

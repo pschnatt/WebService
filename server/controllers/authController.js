@@ -84,7 +84,7 @@ const loginUser = async (req, res) => {
     const match = await comparePassword(password, user.password);
     if (match) {
       // Check if profile exists
-      const profile = await Profile.findOne({ username: user.username });
+      var profile = await Profile.findOne({ username: user.username });
       if (!profile) {
         // Create a new profile if it doesn't exist
         const prof = await Profile.create({
