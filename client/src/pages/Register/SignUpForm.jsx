@@ -1,32 +1,65 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './SignUpForm.css';
 
 const SignUpForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [data, setData] = useState({
+    username: '',
+    email:'',
+    phoneNumber: '',
+    password:'',
+    cpassword: '',
+  })
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    // Implement sign-up logic here, e.g., API call
-    if (password !== confirmPassword) {
-      alert('Passwords do not match!');
-      return;
+  const onSIGNINTextClick = async(e) => {
+    e.preventDefault()
+    const {username, email, phoneNumber, password, cpassword} = data
+    try{
+      const {data} = await axios.post('/register', {
+        username, email, phoneNumber, password, cpassword
+        });
+        if (data.error) {
+          toast.error(data.error)
+        }
+        else {
+          setData({})
+          toast.success('Sign Up Successful!')
+          navigate('/login')
+        }
+      }catch (error) { console.log(error)}
     }
-    console.log('Signing up:', { email, password });
-  };
 
   return (
     <div className="signup-form-container">
-      <form onSubmit={handleSignUp}>
+      <form>
         <h2>Sign Up</h2>
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="username">Username</label>
+          <input
+            type="username"
+            id="username"
+            value={data.username}
+            onChange={(e) => setData({ ...data, username: e.target.value })}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={data.email}
+            onChange={(e) => setData({ ...data, email: e.target.value })}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="phoneNumber">phoneNumber:</label>
+          <input
+            type="phoneNumber"
+            id="phoneNumber"
+            value={data.phoneNumber}
+            onChange={(e) => setData({ ...data, phoneNumber: e.target.value })}
             required
           />
         </div>
@@ -35,8 +68,8 @@ const SignUpForm = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={data.password}
+            onChange={(e) => setData({ ...data, password: e.target.value })}
             required
           />
         </div>
@@ -45,12 +78,12 @@ const SignUpForm = () => {
           <input
             type="password"
             id="confirm-password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={data.cPassword}
+            onChange={(e) => setData({ ...data, cpassword: e.target.value })}
             required
           />
         </div>
-        <button type="submit" className="submit-button">Sign Up</button>
+        <button type="submit" className="submit-button" onClick={onSIGNINTextClick}>Sign Up</button>
       </form>
     </div>
   );

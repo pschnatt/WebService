@@ -11,6 +11,10 @@ import List from "./pages/list/List";
 import BookingHistory from "./pages/bookinghistory/bookinghistory";
 import Login from "./pages/Login/LoginForm";
 import Register from "./pages/Register/SignUpForm";
+import axios from "axios";
+
+axios.defaults.baseURL = "http://localhost:8000"
+axios.defaults.withCredential = true
 
 function App() {
   return (

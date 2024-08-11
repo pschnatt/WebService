@@ -9,7 +9,7 @@ const { createbook, getBook, deleteBook } = require('../controllers/bookingContr
 router.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:3000',
   })
 );
 

@@ -8,6 +8,7 @@ const registerUser = async(req, res) => {
   try {
       const {username, email, phonenumber ,password, cpassword} = req.body;
       //check if name was enter
+      console.log(phonenumber);
       if (!username){
         return res.json({
           error: "name is required"
