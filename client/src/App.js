@@ -4,6 +4,7 @@ import {
   Route,
 } from "react-router-dom";
 import Home from "./pages/home/Home";
+import User from "./pages/user/User";
 import Restaurant from "./pages/RestaurantDe/Restaurant";
 import BookingPage from "./pages/bookingdetail/bookingde";
 import List from "./pages/list/List";
@@ -16,6 +17,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route path="/user" element={<User/>}/>
         <Route path="/restaurants" element={<List/>}/>
         <Route path="/restaurant/:id" element={<Restaurant/>}/>
         <Route path="/bookingdetail" element={<BookingPage/>}/>
