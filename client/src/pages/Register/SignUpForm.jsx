@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import './SignUpForm.css';
 
 const SignUpForm = () => {
   const [data, setData] = useState({
-    username: '',
+    username:'',
     email:'',
-    phoneNumber: '',
+    phonenumber:'',
     password:'',
-    cpassword: '',
+    cpassword:'',
   })
 
   const onSIGNINTextClick = async(e) => {
     e.preventDefault()
-    const {username, email, phoneNumber, password, cpassword} = data
+    const {username, email, phonenumber, password, cpassword} = data
     try{
       const {data} = await axios.post('/register', {
-        username, email, phoneNumber, password, cpassword
+        username, email, phonenumber, password, cpassword
         });
         if (data.error) {
           toast.error(data.error)
@@ -54,12 +55,12 @@ const SignUpForm = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="phoneNumber">phoneNumber:</label>
+          <label htmlFor="phoneNumber">phonenumber:</label>
           <input
             type="phoneNumber"
             id="phoneNumber"
-            value={data.phoneNumber}
-            onChange={(e) => setData({ ...data, phoneNumber: e.target.value })}
+            value={data.phonenumber}
+            onChange={(e) => setData({ ...data, phonenumber: e.target.value })}
             required
           />
         </div>
