@@ -162,15 +162,9 @@ const addHistoryEntry = async (req, res) => {
   }
 };
 
-const logoutUser = (req, res) => {
-  // Clear the authentication cookie
-  res.clearCookie('token').json({ message: 'Logout successful' }).redirect('/');
-};
-
 module.exports = {
   registerUser,
   loginUser,
   addHistoryEntry,
-  getProfile,
-  logoutUser
+  getProfile
 }
