@@ -9,11 +9,27 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Restaurant = () => {
+  const { restaurantId } = useParams();
+  const [restaurant, setRestaurant] = useState([]);
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    // console.log(restaurantId);
+    axios.get("/api/restaurants/getRestById", {restaurantId})
+      .then((response) => {
+        setRestaurant(response.data);
+        // console.log("SAd")
+        // console.log(response.data.name)
+      })
+      .catch((error) => toast.error("Error fetching restaurant resources:", error));
+  }, []);
 
   const photos = [
     {
@@ -45,12 +61,12 @@ const Restaurant = () => {
     let newSlideNumber;
 
     if (direction === "l") {
-      newSlideNumber = slideNumber === 0 ? 5 : slideNumber - 1;
+      newSlideNumber = slideNumber === 0 ? photos.length - 1 : slideNumber - 1;
     } else {
-      newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
+      newSlideNumber = slideNumber === photos.length - 1 ? 0 : slideNumber + 1;
     }
 
-    setSlideNumber(newSlideNumber)
+    setSlideNumber(newSlideNumber);
   };
 
   return (
@@ -82,16 +98,16 @@ const Restaurant = () => {
         )}
         <div className="restaurantWrapper">
           <button className="bookNow">Reserve or Book Now!</button>
-          <h1 className="restaurantTitle">Rinda Garden</h1>
+          <h1 className="restaurantTitle">{restaurant.name || "Restaurant Title"}</h1>
           <div className="restaurantAddress">
             <FontAwesomeIcon icon={faLocationDot} />
-            <span>Thailand</span>
+            <span>{restaurant.address || "Location not available"}</span>
           </div>
           <span className="restaurantDistance">
-            3.2km from your current location
+            {restaurant.distance || "Distance not available"}
           </span>
           <span className="restaurantPriceHighlight">
-            Free wifi and Water
+            {restaurant.priceHighlight || "Price Highlight not available"}
           </span>
           <div className="restaurantImages">
             {photos.map((photo, i) => (
@@ -109,20 +125,16 @@ const Restaurant = () => {
             <div className="restaurantDetailsTexts">
               <h1 className="restaurantTitle">Dine in the heart of the City</h1>
               <p className="restaurantDesc">
-              Nestled in the heart of the city, Rinda Garden offers a serene dining experience just a short stroll from the bustling Main Market Square. 
-              This restaurant boasts a charming blend of modern and traditional decor, with wooden floors and warm lighting that create a cozy atmosphere. Guests can enjoy a variety of gourmet dishes, 
-              each prepared with the freshest local ingredients. The menu includes everything from classic Thai cuisine to international favorites, all accompanied by a carefully curated selection of wines. Whether you're here for a romantic dinner or a casual lunch, Rinda Garden promises an unforgettable culinary journey. The restaurant 
-              also offers complimentary WiFi and a comfortable seating area, making it an ideal spot for both dining and relaxation.
+                {restaurant.description || "Description not available"}
               </p>
             </div>
             <div className="restaurantDetailsPrice">
-              <h1>Greate Place for taking a photo and Family Time</h1>
+              <h1>Great Place for taking a photo and Family Time</h1>
               <span>
-                This property has an
-                excellent location score of 9.8!
+                {restaurant.locationScore || "Location score not available"}
               </span>
               <h2>
-                <b>$8</b> (Food Start Price)
+                <b>${restaurant.startingPrice || "Price not available"}</b> (Food Start Price)
               </h2>
               <button>Reserve or Book Now!</button>
             </div>

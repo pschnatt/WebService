@@ -1,7 +1,58 @@
 import React from "react";
 import "./bookingde.css";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const BookingPage = () => {
+
+  const handleConfirmBooking = async (e) => {
+    e.preventDefault();
+    try {
+      const bookingData = {
+        userId,
+        restaurantId,
+        tableNumber,
+        seats,
+        date,
+        specialReq,
+        paymentMethod,
+        status
+      };
+  
+      const bookingResponse = await axios.post("/api/bookings/createBook", bookingData);
+  
+      if (bookingResponse.data.error) {
+        toast.error(bookingResponse.data.error);
+      } else {
+        toast.success('Booking Successful!');
+        
+        const historyEntry = {
+          restaurantid: bookingData.restaurantId,
+          restaurantname: "Pizza Paradise",
+          seat: bookingData.seats,
+          price: bookingResponse.data.price,
+          date: bookingData.date,
+          status: bookingData.status
+        };
+  
+        const historyResponse = await axios.post("/api/user/addHistoryEntry", {
+          user_id: bookingData.userId,
+          newHistory: historyEntry
+        });
+  
+        if (historyResponse.data.error) {
+          toast.error('Error adding history entry: ' + historyResponse.data.error);
+        } else {
+          toast.success('History entry added successfully!');
+        }
+      }
+    } catch (error) {
+      console.error('Error during booking or adding history:', error);
+      toast.error('An error occurred during booking.');
+    }
+  };
+
   return (
     <div>
         <div className="bookingPageContainer">
@@ -97,7 +148,7 @@ const BookingPage = () => {
               <span>Booking amount</span>
               <span>$400</span>
             </div>
-            <button className="confirmButton">Confirm booking</button>
+            <button className="confirmButton" onClick={handleConfirmBooking}>Confirm booking</button>
           </div>
         </div>
         </div>
