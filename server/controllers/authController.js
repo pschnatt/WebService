@@ -7,8 +7,6 @@ const jwt = require('jsonwebtoken')
 const registerUser = async(req, res) => {
   try {
       const {username, email, phonenumber ,password, cpassword} = req.body;
-      //check if name was enter
-      console.log(email)
       if (!username){
         return res.status(400).json({
           error: "name is required"
@@ -146,7 +144,6 @@ const getProfile = (req,res) => {
 const addHistoryEntry = async (req, res) => {
   try {
     const { user_id, newHistory } = req.body;
-    console.log(newHistory);
     const updatedProfile = await Profile.findOneAndUpdate(
       {id : user_id},
       {

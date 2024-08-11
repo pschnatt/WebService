@@ -29,7 +29,6 @@ const Restaurant = () => {
     axios.post("/api/restaurants/getRestById", {restaurantId: id})
       .then((response) => {
         setRestaurant(response.data);
-        console.log(response.data)
       })
       .catch((error) => toast.error("Error fetching restaurant resources:", error));
   }, []);
