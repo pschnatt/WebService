@@ -3,6 +3,7 @@ import './LoginForm.css';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie'; 
 
 
 const LoginForm = () => {
@@ -29,6 +30,7 @@ const LoginForm = () => {
           setData({})
           toast.success('Login Successful!')
           navigate('/');
+          Cookies.set('token', response.data.token, { expires: 1 });
         }
       }
     catch (error) 

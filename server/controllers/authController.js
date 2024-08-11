@@ -107,9 +107,8 @@ const loginUser = async (req, res) => {
           console.error(err);
           return res.status(400).json({ error: 'Error signing token' });
         }
-        console.log(token)
         res.cookie('token', token, {
-          httpOnly: true,
+          httpOnly: false,
           secure: process.env.NODE_ENV === 'production',
           sameSite: 'Strict'
         }).json({ message: 'Login successful' });
