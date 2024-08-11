@@ -1,6 +1,18 @@
 import "./searchItem.css";
 
-const SearchItem = ({ id, imageUrl, title, address, phoneNumber, startprice, Rating = 8.1 }) => {
+const SearchItem = ({ id, imageUrl, title, address, phoneNumber, startprice, Rating = 8.1, maxseats }) => {
+
+  const handleMoreDetailClick = async () => {
+    try {
+      const response = await axios.get(`/api/restaurants/getRestById/${id}`);
+      console.log('Restaurant details:', response.data);
+      toast.info(`Details: ${JSON.stringify(response.data)}`);
+    } catch (error) {
+      console.error('Error fetching restaurant details:', error);
+      toast.error('Error fetching restaurant details');
+    }
+  };
+
   return (
     <div className="searchItem">
       <img
@@ -19,7 +31,7 @@ const SearchItem = ({ id, imageUrl, title, address, phoneNumber, startprice, Rat
         </span>
         <span className="siCancelOp">Free cancellation </span>
         <span className="siCancelOpSubtitle">
-          You can cancel later, so lock in this great price today!
+          Max seats are {maxseats}
         </span>
       </div>
       <div className="siDetails">
@@ -30,7 +42,7 @@ const SearchItem = ({ id, imageUrl, title, address, phoneNumber, startprice, Rat
         <div className="siDetailTexts">
           <span className="siPrice">Start From ${startprice}</span>
           <span className="siTaxOp">Includes taxes and fees</span>
-          <button className="siCheckButton">More Detail</button>
+          <button className="siCheckButton" onClick={handleMoreDetailClick}>More Detail</button>
         </div>
       </div>
     </div>

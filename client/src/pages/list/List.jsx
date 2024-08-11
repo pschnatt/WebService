@@ -14,7 +14,7 @@ const List = () => {
   const location = useLocation();
   const [date, setDate] = useState(location.state?.date ? new Date(location.state.date[0].startDate) : new Date());
   const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state?.options || { adult: 1, children: 0 });
+  const [seats, setSeats] = useState(location.state?.options?.seats || 1);
   const [restaurants, setRestaurants] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -68,21 +68,12 @@ const List = () => {
               <label>Options</label>
               <div className="lsOptions">
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
+                  <span className="lsOptionText">Seat</span>
                   <input
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.adult}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <input
-                    type="number"
-                    min={0}
-                    className="lsOptionInput"
-                    placeholder={options.children}
+                    placeholder={seats}
                   />
                 </div>
               </div>
@@ -95,10 +86,11 @@ const List = () => {
                 id={restaurant.restaurantId}
                 imageUrl={restaurant.imageUrl || "https://media-cdn.tripadvisor.com/media/photo-s/27/9f/45/bc/restaurant.jpg"}
                 title={restaurant.name}
-                address={`${restaurant.address} || "N/A"`}
+                address={restaurant.address || "N/A"}
                 phoneNumber={restaurant.phoneNumber}
                 startprice={restaurant.startingPrice || "20"}
                 Rating={restaurant.rating || "N/A"}
+                maxseats={restaurant.totalSeats || "30"}
               />
             ))}
           </div>
