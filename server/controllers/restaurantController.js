@@ -30,4 +30,16 @@ const getRestaurant = async (req, res) => {
   }
 };
 
-module.exports = { createRestaurant, getRestaurant };
+
+const getRestaurantFromId = async (req, res) => {
+  try {
+    const {restaurantId} = req.body;
+    const restaurant = await Restaurant.findOne({restaurantId})
+    res.status(200).json(restaurant);
+  } catch (error) {
+    console.error('Error getting restaurant:', error);
+    res.status(500).send('Internal Server Error');
+  }
+}
+
+module.exports = { createRestaurant, getRestaurant, getRestaurantFromId };

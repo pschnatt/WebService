@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
-const { getRestaurant, createRestaurant } = require('../controllers/restaurantController');
+const { getRestaurant, createRestaurant, getRestaurantFromId } = require('../controllers/restaurantController');
 
 router.use(
     cors({
@@ -12,5 +12,6 @@ router.use(
 
 router.get('/getRest', getRestaurant);
 router.post('/createRest', createRestaurant);
+router.get('/getRestById', getRestaurantFromId)
 
 module.exports = router;
