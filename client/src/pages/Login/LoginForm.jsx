@@ -19,7 +19,9 @@ const LoginForm = () => {
     try{
       const {data} = await axios.post('/login', {
         email,password
-        });
+        }, {
+          withCredentials: true
+        } );
         if (data.error) {
           toast.error(data.error)
         }

@@ -107,7 +107,12 @@ const loginUser = async (req, res) => {
           console.error(err);
           return res.status(400).json({ error: 'Error signing token' });
         }
-        res.cookie('token', token).json(user); // Password match, then set cookie
+        console.log(token)
+        res.cookie('token', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'Strict'
+        }).json({ message: 'Login successful' });
       });
     } else {
       res.status(400).json({
@@ -121,11 +126,18 @@ const loginUser = async (req, res) => {
 };
 
 const getProfile = (req,res) => {
-  const {token} =req.cookies
+  const {token} = req.cookies
   if(token) {
-    jwt.verify(token,process.env.JWT_SECRET, {}, (err, user) => {
+    
+    jwt.verify(token,process.env.JWT_SECRET, {}, async (err, user) => {
+      const profile = await Profile.findOne({ id: user.uid });
       if(err) throw err;
-      res.json(user)
+      if(profile){
+        res.status(200).json(profile)
+      }
+      else{
+        res.status(400).json({error : 'History Not found'})
+      }
     })
   } else {
     res.json(null)
@@ -138,12 +150,13 @@ const addHistoryEntry = async (req, res) => {
     const updatedProfile = await Profile.findOneAndUpdate(
       {id : user_id},
       {
-        $push: { history: newHistory }, // Add a new entry to the history array
+        $push: { history: newHistory }, 
       },
-      { new: true } // Return the updated document
+      { new: true } 
     );
 
     console.log('Profile updated with new history:', updatedProfile);
+    return res.status(200).json(updatedProfile)
   } catch (error) {
     console.error('Error updating profile with new history:', error);
   }
