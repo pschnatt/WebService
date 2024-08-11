@@ -12,6 +12,6 @@ router.use(
 
 router.get('/getRest', getRestaurant);
 router.post('/createRest', createRestaurant);
-router.get('/getRestById', getRestaurantFromId)
+router.post('/getRestById', getRestaurantFromId)
 
 module.exports = router;

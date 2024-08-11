@@ -10,23 +10,21 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const Restaurant = () => {
-  const { restaurantId } = useParams();
+
   const [restaurant, setRestaurant] = useState([]);
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // console.log(restaurantId);
-    axios.get("/api/restaurants/getRestById", {restaurantId})
+    const id = localStorage.getItem("restaurant_id")
+    axios.post("/api/restaurants/getRestById", {restaurantId: id})
       .then((response) => {
         setRestaurant(response.data);
-        // console.log("SAd")
-        // console.log(response.data.name)
+        console.log(response.data)
       })
       .catch((error) => toast.error("Error fetching restaurant resources:", error));
   }, []);

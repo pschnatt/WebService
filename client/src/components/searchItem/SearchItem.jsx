@@ -1,26 +1,12 @@
 import React from 'react';
 import "./searchItem.css";
-import { toast } from 'react-toastify';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const SearchItem = ({ id, imageUrl, title, address, phoneNumber, startprice, Rating = 8.1, maxseats }) => {
   const navigate = useNavigate();
   const handleMoreDetailClick = async () => {
-    try {
-      const response = await axios.get(`/api/restaurants/getRestById`,{id});
-      const restaurantData = response.data;
-      
-      console.log('Restaurant details:', restaurantData);
-      toast.info(`Details: ${JSON.stringify(restaurantData)}`);
-      
-      // Pass the restaurant data in the state
-      navigate(`/restaurant/${id}`, { state: { restaurant: restaurantData } });
-    } 
-    catch (error) {
-      console.error('Error fetching restaurant details:', error);
-      toast.error('Error fetching restaurant details');
-    }
+    localStorage.setItem("restaurant_id", id);
+    navigate(`/restaurant`);
   };
 
   return (
