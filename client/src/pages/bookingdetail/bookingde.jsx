@@ -7,8 +7,8 @@ import { useLocation } from 'react-router-dom';
 
 
 const BookingPage = () => {
-  const [restaurant, setRestaurant] = useState(null);
-  const [user, setUser] = useState(null);
+  const [restaurant, setRestaurant] = useState();
+  const [user, setUser] = useState();
   const [tableNumber, setTableNumber] = useState('');
   const [seats, setSeats] = useState('');
   const [date, setDate] = useState('');
@@ -16,25 +16,27 @@ const BookingPage = () => {
   const [paymentMethod, setPaymentMethod] = useState('Pay at check-in');
   const [status] = useState('Pending');
 
-  useEffect(() => {
-    const id = localStorage.getItem("restaurant_id")
-    axios.post("/api/restaurants/getRestById", {restaurantId: id})
-      .then((response) => {
-        setRestaurant(response.data);
-        console.log(response.data)
-       
-      })
-      .catch((error) => toast.error("Error fetching restaurant resources:", error));
 
-    axios.get("/profile", {
-      withCredentials: true 
-    })
-      .then((response) => {
-        setUser(response.data);
-        console.log(response.data)
-      })
-      .catch((error) => toast.error("Error fetching user resources:", error));
-  }, []);
+
+  const fetchRestaurant = async () => {
+    const id = localStorage.getItem("restaurant_id");
+    try {
+      const response = await axios.post("/api/restaurants/getRestById", { restaurantId: id });
+      setRestaurant(response.data);
+    } catch (error) {
+      toast.error("Error fetching restaurant resources: " + error.message);
+    }
+  };
+
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get("/profile", { withCredentials: true });
+      setUser(response.data);
+    } catch (error) {
+      toast.error("Error fetching user resources: " + error.message);
+    }
+  };
+
 
   const handleConfirmBooking = async (e) => {
     e.preventDefault();
@@ -83,6 +85,11 @@ const BookingPage = () => {
     }
   };
 
+  useEffect(() => {
+    fetchRestaurant();
+    fetchUser();
+  }, []);
+
   return (
     <div>
         <div className="bookingPageContainer">
@@ -94,8 +101,8 @@ const BookingPage = () => {
                 className="propertyImage"
             />
             <div className="propertyInfo">
-                <h2>{restaurant.name}</h2>
-                <p>{restaurant.address}</p> 
+                <h2>{restaurant?.name}</h2>
+                <p>{restaurant?.address}</p> 
                 <p>Italian Restaurant</p>
             </div>
             </div>
@@ -165,11 +172,11 @@ const BookingPage = () => {
             <h3>Invoice</h3>
             <div className="invoiceItem">
               <span>Reservation Name:</span>
-              <span>{user.username}</span>
+              {/* <span>{user.username}</span> */}
             </div>
             <div className="invoiceItem">
               <span>Contact Email:</span>
-              <span>{user.username}@example.com</span>
+              {/* <span>{user.username}@example.com</span> */}
             </div>
             <div className="invoiceItem">
               <span>Contact Number:</span>
