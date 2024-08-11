@@ -30,7 +30,6 @@ const LoginForm = () => {
           setData({})
           toast.success('Login Successful!')
           navigate('/');
-          Cookies.set('token', response.data.token, { expires: 1 });
         }
       }
     catch (error) 

@@ -146,6 +146,7 @@ const getProfile = (req,res) => {
 const addHistoryEntry = async (req, res) => {
   try {
     const { user_id, newHistory } = req.body;
+    console.log(newHistory);
     const updatedProfile = await Profile.findOneAndUpdate(
       {id : user_id},
       {

@@ -54,21 +54,22 @@ const BookingPage = () => {
   
       const bookingResponse = await axios.post("/api/bookings/createBook", bookingData);
 
-      const historyEntry = {
+
+
+      const historyEntry =  {
         restaurantid: restaurant.restaurantId,
         restaurantname: restaurant.name,
-        seats,
+        seat: seats,
         price: "10",
         date,
         status: "Pending"
       };
-      console.log(restaurant.restaurantId)
-      console.log(user.id)
+
       console.log(historyEntry)
 
       const historyResponse = await axios.post("/addHistory", {
         user_id: user.id,
-        historyEntry
+        newHistory : historyEntry
       });
 
       if (historyResponse.data.error) {

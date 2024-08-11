@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const {Schema} = mongoose
 
 const bookingHistorySchema = new Schema({
-  restaurantid : Number,
+  restaurantid : String,
   restaurantname : String,
   seat: Number,
   price: Number,
