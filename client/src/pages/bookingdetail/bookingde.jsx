@@ -53,31 +53,34 @@ const BookingPage = () => {
       };
   
       const bookingResponse = await axios.post("/api/bookings/createBook", bookingData);
+
+      const historyEntry = {
+        restaurantid: restaurant.restaurantId,
+        restaurantname: restaurant.name,
+        seats,
+        price: "10",
+        date,
+        status: "Pending"
+      };
+      console.log(restaurant.restaurantId)
+      console.log(user.id)
+      console.log(historyEntry)
+
+      const historyResponse = await axios.post("/addHistory", {
+        user_id: user.id,
+        historyEntry
+      });
+
+      if (historyResponse.data.error) {
+        toast.error('Error adding history entry: ' + historyResponse.data.error);
+      } else {
+        toast.success('History entry added successfully!');
+      }
   
       if (bookingResponse.data.error) {
         toast.error(bookingResponse.data.error);
       } else {
         toast.success('Booking Successful!');
-        
-        const historyEntry = {
-          restaurantid: bookingData.restaurantId,
-          restaurantname: restaurant.name,
-          seat: bookingData.seats,
-          price: bookingResponse.data.price,
-          date: bookingData.date,
-          status: bookingData.status
-        };
-  
-        const historyResponse = await axios.post("/addHistory", {
-          user_id: bookingData.userId,
-          newHistory: historyEntry
-        });
-  
-        if (historyResponse.data.error) {
-          toast.error('Error adding history entry: ' + historyResponse.data.error);
-        } else {
-          toast.success('History entry added successfully!');
-        }
       }
     } catch (error) {
       console.error('Error during booking or adding history:', error);
@@ -120,6 +123,7 @@ const BookingPage = () => {
               <label>Seats</label>
               <input
                 type="number"
+                placeholder={1}
                 value={seats}
                 onChange={(e) => setSeats(e.target.value)}
               />
@@ -172,11 +176,11 @@ const BookingPage = () => {
             <h3>Invoice</h3>
             <div className="invoiceItem">
               <span>Reservation Name:</span>
-              {/* <span>{user.username}</span> */}
+              <span>{user?.username}</span>
             </div>
             <div className="invoiceItem">
               <span>Contact Email:</span>
-              {/* <span>{user.username}@example.com</span> */}
+              <span>{user?.username}@example.com</span>
             </div>
             <div className="invoiceItem">
               <span>Contact Number:</span>
@@ -187,24 +191,16 @@ const BookingPage = () => {
               <span>{seats}</span>
             </div>
             <div className="invoiceItem">
-              <span>Reservation Price</span>
-              <span>$400</span>
+              <span>Table Number</span>
+              <span>{tableNumber}</span>
             </div>
             <div className="invoiceItem">
-              <span>Application fee</span>
-              <span>$50</span>
-            </div>
-            <div className="invoiceItem total">
-              <span>Total amount</span>
-              <span>$450</span>
+              <span>Payment Method</span>
+              <span>{paymentMethod}</span>
             </div>
             <div className="invoiceItem">
-              <span>Coupon discount</span>
-              <span>-$50</span>
-            </div>
-            <div className="invoiceItem finalAmount">
-              <span>Booking amount</span>
-              <span>$400</span>
+              <span>Special Request</span>
+              <span>{specialReq}</span>
             </div>
             <button className="confirmButton" onClick={handleConfirmBooking}>Confirm booking</button>
           </div>
