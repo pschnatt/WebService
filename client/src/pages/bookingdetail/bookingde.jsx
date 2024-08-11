@@ -18,18 +18,18 @@ const BookingPage = () => {
 
   useEffect(() => {
     const id = localStorage.getItem("restaurant_id")
-    console.log(id)
     axios.post("/api/restaurants/getRestById", {restaurantId: id})
       .then((response) => {
         setRestaurant(response.data);
-        console.log(response.data)
+       
       })
       .catch((error) => toast.error("Error fetching restaurant resources:", error));
 
-    axios.get("/profile")
+    axios.get("/profile", {
+      withCredentials: true 
+    })
       .then((response) => {
         setUser(response.data);
-        console.log(user)
       })
       .catch((error) => toast.error("Error fetching user resources:", error));
   }, []);
