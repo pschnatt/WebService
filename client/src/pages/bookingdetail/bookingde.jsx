@@ -21,6 +21,7 @@ const BookingPage = () => {
     axios.post("/api/restaurants/getRestById", {restaurantId: id})
       .then((response) => {
         setRestaurant(response.data);
+        console.log(response.data)
        
       })
       .catch((error) => toast.error("Error fetching restaurant resources:", error));
@@ -30,6 +31,7 @@ const BookingPage = () => {
     })
       .then((response) => {
         setUser(response.data);
+        console.log(response.data)
       })
       .catch((error) => toast.error("Error fetching user resources:", error));
   }, []);
@@ -40,10 +42,10 @@ const BookingPage = () => {
       const bookingData = {
         userId: user.id,
         restaurantId: restaurant.restaurantId,
-        tableNumber:"6",
-        seats:"6",
-        date:"10",
-        specialReq:"None",
+        tableNumber,
+        seats,
+        date,
+        specialReq,
         paymentMethod,
         status: "Pending"
       };
@@ -92,8 +94,8 @@ const BookingPage = () => {
                 className="propertyImage"
             />
             <div className="propertyInfo">
-                <h2>Panoramic Resaurant</h2>
-                <p>Baga, North Goa, Goa</p> 
+                <h2>{restaurant.name}</h2>
+                <p>{restaurant.address}</p> 
                 <p>Italian Restaurant</p>
             </div>
             </div>
@@ -163,23 +165,19 @@ const BookingPage = () => {
             <h3>Invoice</h3>
             <div className="invoiceItem">
               <span>Reservation Name:</span>
-              <span>John Doe</span>
+              <span>{user.username}</span>
             </div>
             <div className="invoiceItem">
               <span>Contact Email:</span>
-              <span>john.doe@example.com</span>
+              <span>{user.username}@example.com</span>
             </div>
             <div className="invoiceItem">
               <span>Contact Number:</span>
               <span>(555) 123-4567</span>
             </div>
             <div className="invoiceItem">
-              <span>Adult number</span>
-              <span>2</span>
-            </div>
-            <div className="invoiceItem">
-              <span>Childrent number</span>
-              <span>4</span>
+              <span>Seat</span>
+              <span>{seats}</span>
             </div>
             <div className="invoiceItem">
               <span>Reservation Price</span>
