@@ -8,6 +8,8 @@ import Restaurant from "./pages/RestaurantDe/Restaurant";
 import BookingPage from "./pages/bookingdetail/bookingde";
 import List from "./pages/list/List";
 import BookingHistory from "./pages/bookinghistory/bookinghistory";
+import Login from "./pages/Login/LoginForm";
+import Register from "./pages/Register/SignUpForm";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/restaurant/:id" element={<Restaurant/>}/>
         <Route path="/bookingdetail" element={<BookingPage/>}/>
         <Route path="/bookinghistory" element={<BookingHistory/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
       </Routes>
     </BrowserRouter>
   );
