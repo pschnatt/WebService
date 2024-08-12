@@ -1,53 +1,53 @@
 import "./profileCard.css"
 import myImage from './profile.png';
-const name = "Michael Thompson"
-const email = "MichaelThompson@gmail.com"
-const firstName = "Michael"
-const lastname = "Thompson"
-const bDay = "19/15/1996"
-const phone = "123456789"
+import { useNavigate } from 'react-router-dom';
 
 const ProfileCard = () => {
-  return (
-    <div className="profilecard">
-        <div className="profileContainer">
-            <div className="profileAvatar">
-                <div className="profileIMG">
-                    <img src={myImage} alt="Profile Avatar" />
-                </div>
-                <div className="profileName">
-                    <p>{name}</p>
-                </div>
-                <button className="editButton">Edit</button>
-            </div>
-            <div className="profileInfo">
-                <div className="profileInfoHeader">
-                    <p>Information</p>
-                </div>
-                <div className="infoWrapper">
-                    <div className="innerInfoWrapper">
-                        FirstName: {firstName}
+    const navigate = useNavigate();
+    const handleHomePageClick = () => {
+        navigate("/");
+      };
+
+    return (
+        <div className="profilecard">
+            <div className="profileContainer">
+                <div className="profileAvatar">
+                    <div className="profileIMG">
+                        <img src={myImage} alt="Profile Avatar" />
                     </div>
-                    <div className="innerInfoWrapper">
-                        LastName: {lastname}
+                    <div className="profileName">
+                        <p>Booking ID : {localStorage.getItem("bookingId")}</p>
                     </div>
+                    <button className="editButton" onClick={handleHomePageClick}>Back To Home</button>
                 </div>
-                <div className="infoWrapper">
-                    <div className="innerInfoWrapper">
-                        Birthday: {bDay}
+                <div className="profileInfo">
+                    <div className="profileInfoHeader">
+                        <p>Booking Summary</p>
                     </div>
-                    <div className="innerInfoWrapper">
-                        Phone: {phone}
+                    <div className="infoWrapper">
+                        <div className="innerInfoWrapper">
+                            Restaurant Name: {localStorage.getItem("restaurantName")}
+                        </div>
+                        <div className="innerInfoWrapper">
+                            Date: {localStorage.getItem("date")}
+                        </div>
                     </div>
-                </div>
-                <div className="infoWrapper">
-                    <div className="innerInfoWrapper">
-                        Email: {email}
+                    <div className="infoWrapper">
+                        <div className="innerInfoWrapper">
+                            Price: {localStorage.getItem("price")}
+                        </div>
+                        <div className="innerInfoWrapper">
+                            Seat: {localStorage.getItem("seat")}
+                        </div>
+                    </div>
+                    <div className="infoWrapper">
+                        <div className="innerInfoWrapper">
+                            Status: {localStorage.getItem("status")}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
   )
 }
 

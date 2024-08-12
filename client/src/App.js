@@ -11,6 +11,7 @@ import List from "./pages/list/List";
 import BookingHistory from "./pages/bookinghistory/bookinghistory";
 import Login from "./pages/Login/LoginForm";
 import Register from "./pages/Register/SignUpForm";
+import CompleteBooking from "./pages/completeBooking/completeBooking"
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8000"
@@ -28,6 +29,7 @@ function App() {
         <Route path="/bookinghistory" element={<BookingHistory/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
+        <Route path="/complete" element={<CompleteBooking/>}/>
       </Routes>
     </BrowserRouter>
   );

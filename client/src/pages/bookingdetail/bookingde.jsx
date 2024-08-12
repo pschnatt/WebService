@@ -3,6 +3,7 @@ import "./bookingde.css";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useState, useEffect} from "react";
+import { useNavigate } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
 
 const BookingPage = () => {
@@ -15,7 +16,7 @@ const BookingPage = () => {
   const [paymentMethod, setPaymentMethod] = useState('Pay at check-in');
   const [status] = useState('Pending');
 
-
+  const navigate = useNavigate();
 
   const fetchRestaurant = async () => {
     const id = localStorage.getItem("restaurant_id");
@@ -52,7 +53,12 @@ const BookingPage = () => {
   
       const bookingResponse = await axios.post("/api/bookings/createBook", bookingData);
 
-
+      localStorage.setItem("restaurantName", restaurant.name)
+      localStorage.setItem("seat", seats)
+      localStorage.setItem("price","10")
+      localStorage.setItem("date",date)
+      localStorage.setItem("status","Pending")
+      localStorage.setItem("bookingId", bookingResponse.data.bookingId)
 
       const historyEntry =  {
         restaurantid: restaurant.restaurantId,
@@ -68,6 +74,8 @@ const BookingPage = () => {
         newHistory : historyEntry
       });
 
+      console.log('check1')
+
       if (historyResponse.data.error) {
         toast.error('Error adding history entry: ' + historyResponse.data.error);
       } else {
@@ -78,6 +86,7 @@ const BookingPage = () => {
         toast.error(bookingResponse.data.error);
       } else {
         toast.success('Booking Successful!');
+        navigate('/complete')
       }
     } catch (error) {
       console.error('Error during booking or adding history:', error);
