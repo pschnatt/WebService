@@ -21,6 +21,10 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  const handleHistory = () => {
+    navigate("/bookinghistory");
+  };
+
   const handlePreviousClick = () => {
     navigate(-1);
   };
@@ -38,8 +42,10 @@ const Navbar = () => {
         <span className="logo">SukSaang</span>
         <div className="navItems">
           {isLoggedIn ? (
-            <button className="navButton" onClick={handleLogoutClick}>Logout</button>
-            
+            <>
+              <button className="navButton" onClick={handleHistory}>History</button>
+              <button className="navButton" onClick={handleLogoutClick}>Logout</button>
+            </>
           ) : (
             <>
               <button className="navButton" onClick={handleRegisterClick}>Register</button>

@@ -10,6 +10,7 @@ import SearchItem from "../../components/searchItem/SearchItem";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+
 const List = () => {
   const location = useLocation()
   const [destination, setDestination] = useState(location.state?.destination || "");
