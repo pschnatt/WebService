@@ -11,12 +11,13 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const List = () => {
-  const location = useLocation();
-  const [date, setDate] = useState(location.state?.date ? new Date(location.state.date[0].startDate) : new Date());
+  const location = useLocation()
+  const [destination, setDestination] = useState(location.state?.destination || "");
+  const [date, setDate] = useState(location.state?.selectedDate || new Date());
   const [openDate, setOpenDate] = useState(false);
   const [seats, setSeats] = useState(location.state?.options?.seats || 1);
   const [restaurants, setRestaurants] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(location.state?.destination);
 
   useEffect(() => {
     axios.get("/api/restaurants/getRest")
@@ -45,7 +46,7 @@ const List = () => {
             <div className="lsItem">
               <label>Restaurant Name</label>
               <input
-                placeholder={"destination"}
+                placeholder={destination}
                 type="text"
                 value={searchTerm}
                 onChange={handleSearchChange}
@@ -56,6 +57,7 @@ const List = () => {
               <span onClick={() => setOpenDate(!openDate)}>{`${format(date, "MM/dd/yyyy")}`}</span>
               {openDate && (
                 <DatePicker
+                  placeholder={date}
                   selected={date}
                   onChange={(newDate) => setDate(newDate)}
                   dateFormat="MM/dd/yyyy"

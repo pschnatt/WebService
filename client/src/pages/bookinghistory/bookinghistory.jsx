@@ -25,6 +25,7 @@ const BookingHistory = () => {
 
   return (
     <div className="booking-history">
+      <Navbar />
       <button className="back-button" onClick={() => navigate('/')}>Back to Home</button>
       <button className="back-button" onClick={() => navigate('/restaurants')}>Back to List</button>
       <h2>Booking History</h2>

@@ -3,6 +3,7 @@ import "./bookingde.css";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useState, useEffect} from "react";
+import Navbar from "../../components/navbar/Navbar";
 
 const BookingPage = () => {
   const [restaurant, setRestaurant] = useState();
@@ -91,6 +92,7 @@ const BookingPage = () => {
 
   return (
     <div>
+      <Navbar />
         <div className="bookingPageContainer">
         <div className="leftSection">
             <div className="bookingDetails">

@@ -21,13 +21,16 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  const handlePreviousClick = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     const token = Cookies.get('token')
     console.log('Token from cookies:', token)
     setIsLoggedIn(token !== undefined)
-  }, []);
-  
-  
+    
+  }, []);  
 
   return (
     <div className="navbar">
@@ -36,12 +39,14 @@ const Navbar = () => {
         <div className="navItems">
           {isLoggedIn ? (
             <button className="navButton" onClick={handleLogoutClick}>Logout</button>
+            
           ) : (
             <>
               <button className="navButton" onClick={handleRegisterClick}>Register</button>
               <button className="navButton" onClick={handleLoginClick}>Login</button>
             </>
           )}
+          <button className="navButton" onClick={handlePreviousClick}>Previous</button>
         </div>
       </div>
     </div>
