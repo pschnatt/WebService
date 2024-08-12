@@ -3,35 +3,36 @@ version: '3.8'
 services:
   mongo:
     image: mongo
+    deploy: 
+      replicas: 1
+      restart_policy: 
+        condition: any
     container_name: mongo-cont
     ports:
       - '27016:27017'
-    networks:
-      - fs-app
     
   backend:
-    build: ./server
+    image: webservice-backend
+    deploy: 
+      replicas: 1
+      restart_policy: 
+        condition: any
     container_name: node-app-cont
     ports:
-      - '8001:8000'
+      - '8000:8000'
     depends_on:
       - mongo
     environment:
       - MONGO_URL=mongodb+srv://schnatr:0QYbu8dfKOeveZve@cluster0.awxhy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
-    networks:
-      - fs-app
-
   frontend:
-    build: ./client
+    image: webservice-frontend
+    deploy: 
+      replicas: 1
+      restart_policy: 
+        condition: any
     container_name: react-app-cont
     ports:
-      - '3001:3000'
+      - '3000:3000'
     environment:
-    - REACT_APP_API_URL=http://localhost:8001
-    networks:
-      - fs-app
-    
-networks:
-  fs-app:
-    driver: bridge
+    - REACT_APP_API_URL=http://localhost:8000
