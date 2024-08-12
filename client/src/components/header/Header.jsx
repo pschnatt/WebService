@@ -39,7 +39,6 @@ const Header = ({ showSearchItems = true }) => {
     if (token) {
       fetchUser();
     }
-    console.log('Token from cookies:', token)
     setIsLoggedIn(token !== undefined)
   }, []);
   

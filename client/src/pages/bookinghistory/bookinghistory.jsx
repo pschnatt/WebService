@@ -43,7 +43,7 @@ const BookingHistory = () => {
           <button className={filter === 'ALL' ? 'active' : ''} onClick={() => setFilter('ALL')}>
             ALL
           </button>
-          <button className={filter === 'Incomplete' ? 'active' : ''} onClick={() => setFilter('Incomplete')}>
+          <button className={filter === 'Pending' ? 'active' : ''} onClick={() => setFilter('Pending')}>
             PENDING
           </button>
           <button className={filter === 'Cancelled' ? 'active' : ''} onClick={() => setFilter('Cancelled')}>
@@ -62,7 +62,6 @@ const BookingHistory = () => {
               <th>Cost</th>
               <th>Seat</th>
               <th>Status</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -74,9 +73,6 @@ const BookingHistory = () => {
                 <td>{booking.price}</td>
                 <td>{booking.seat}</td>
                 <td className={booking.status.toLowerCase()}>{booking.status}</td>
-                <td>
-                  <button className="details-button">Details</button>
-                </td>
               </tr>
             ))}
           </tbody>
